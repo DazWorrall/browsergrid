@@ -1,0 +1,31 @@
+{%- macro render_field(field, wide=True, span_size='span2', help_class='help-inline') -%}
+    <div class="control-group {% if field.errors %}error{% endif %}">
+    {% if field.type in ('HiddenField', 'CSRFTokenField') %}
+        {{ field() }}
+    {% else %}
+        {% if field.type == 'BooleanField' %}
+            <div class="controls">
+            <label class="checkbox" for="{{ field.label.field_id }}">
+                {{ field() }}
+                {{ field.label.text }}
+            </label>
+        {% else %}
+            <label class="control-label">{{ field.label.text }} {% if not field.flags.required %} <span class="optional" >(optional)</span>{% endif %}</label>
+            <div class="controls">
+            {{ field(class=span_size) }}
+        {% endif %}
+        {% if field.errors %}
+            <p class="{{ help_class }}">{{ field.errors|join(' ') }}</p>
+        {% elif field.description %}
+            <p class="{{ help_class }}">{{ field.description }}</p>
+        {% endif %}
+        </div>
+    {% endif %}
+    </div>
+{%- endmacro -%}
+
+{%- macro render_fields(form, wide=True, span_size='span2', help_class='help-inline') -%}
+    {% for field in form %}
+        {{ render_field(field, wide=wide, span_size=span_size, help_class=help_class) }}
+    {% endfor %}
+{%- endmacro -%}

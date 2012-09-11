@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}{{ super() }} - Home{% endblock title %}
+{% block content %}
+    <div class="row">
+        <div class="span10 offset1"> 
+            <form class="form-inline well">
+                <input type="text" class="span8" placeholder="http://www.google.com">
+                <button type="submit" class="btn">Start</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% from "_bootstrap_wtf.html" import render_fields %}
+{% block title %}{{ super() }} - Login{% endblock title %}
+{% block content %}
+    <div class="row">
+        <div class="span10 offset1">
+            <form method="POST" class="span8">
+                <fieldset>
+                    {{ render_fields(form, span_size="span8") }}
+                </fieldset>
+                <fieldset class="form-actions">
+                    <button type="submit" name="action" value="add" class="btn btn-success">Login</button>
+                </fieldset>
+            </form>         
+        </div>
+    </div>
+{% endblock content %}
