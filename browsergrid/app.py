@@ -23,20 +23,27 @@ def init_db(app):
 
 @bg.route('/')
 def index():
-    return render_template('index.html')
+    jobs = Job.query.all()
+    return render_template('index.html', jobs=jobs)
 
 @bg.route('/new', methods=['GET', 'POST'])
 def new():
     form = NewJobForm()
     if form.validate_on_submit():
         job = Job.new(url=form.url.data)
+        # This isnt tested for, because this is a hack #TODO:present some selection for these
+        job.add_check(
+            browser_name = 'firefox',
+            version = '15',
+            platform = 'ANY',
+        )
         return redirect(url_for('.job_detail', _id = job.id))
-    print form.errors
     return render_template('new.html', form=form)
 
-@bg.route('/job/<_id>')
+@bg.route('/job/<int:_id>')
 def job_detail(_id):
-    pass
+    job = Job.query.get_or_404(_id)
+    return render_template('job_detail.html', job=job)
 
 app = create_app()
 

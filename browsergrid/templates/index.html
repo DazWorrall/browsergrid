@@ -8,4 +8,9 @@
             <a href="{{ url_for('.new') }}" class="btn btn-primary btn-large">Begin</a>
         </p>
     </div>
+    <div class="row">
+        {% for j in jobs %}
+            <a href="{{ url_for('.job_detail', _id=j.id) }}">Job {{ j.id}}</a>
+        {% endfor %}
+    </div>
 {% endblock content %}

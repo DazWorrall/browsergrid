@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}{{ super() }} - Home{% endblock title %}
+{% block content %}
+    <div class="row">
+        <div class="span10 offset1"> 
+            <h1>{{ job.url }}</h1>
+            {% for check in job.checks %}
+                {{ check }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
