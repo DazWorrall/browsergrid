@@ -41,5 +41,16 @@ class Check(db.Model):
     last_run = db.Column(db.DateTime, nullable=True, default=None)
 
     @classmethod
-    def to_run(cls):
-        return cls.query.filter_by(running=False, try_count=0)
+    def to_run(cls, lock=False):
+        checks = []
+        query = cls.query.filter_by(running=False, try_count=0)
+        if lock:
+            query = query.with_lockmode('update')
+            for c in query:
+                c.running = True
+                db.session.add(c)
+                checks.append(c)
+            db.session.commit()
+        else:
+            checks = list(query)
+        return checks
