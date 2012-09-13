@@ -8,9 +8,28 @@
             <a href="{{ url_for('.new') }}" class="btn btn-primary btn-large">Begin</a>
         </p>
     </div>
-    <div class="row">
-        {% for j in jobs %}
-            <a href="{{ url_for('.job_detail', _id=j.id) }}">Job {{ j.id}}</a>
-        {% endfor %}
-    </div>
+    {% if jobs %}
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Check URL</th>
+                        <th># of checks</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for j in jobs %}
+                        <tr>
+                            <td><a href="{{ url_for('.job_detail', _id=j.id) }}">{{ j.id}}</a></td>
+                            <td>{{ j.url }}</td>
+                            <td>{{ j.checks.count()}}</td>
+                            <td>{% if not j.running %}Not {% endif %}Running</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 {% endblock content %}

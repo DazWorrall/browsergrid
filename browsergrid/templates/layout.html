@@ -32,7 +32,9 @@
           <a class="brand" href="/">{{ config.SITE_TITLE or '' }}</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-                <!--<li><a href="{# url_for('.login') #}">Login</a></li>-->
+                {% for n in ['bg.new'] %}
+                    <li {% if request.endpoint == n %}class="active"{% endif %}><a href="{{ url_for('.new') }}">New</a></li>
+                {% endfor %}
             </ul>   
           </div>
         </div>

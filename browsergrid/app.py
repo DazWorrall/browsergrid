@@ -23,7 +23,7 @@ def init_db(app):
 
 @bg.route('/')
 def index():
-    jobs = Job.query.all()
+    jobs = Job.query.order_by(Job.id.desc()).limit(app.config['RECENT_JOBS_COUNT'])
     return render_template('index.html', jobs=jobs)
 
 @bg.route('/new', methods=['GET', 'POST'])
