@@ -8,18 +8,19 @@ from flask.ext.wtf.html5 import EmailField, DateField, URLField
 
 def create_browser_choices(options):
     choices = []
-    for platform, browsers in options.iteritems():
-        for browser, data in browsers.iteritems():
+    for platform, data in options.iteritems():
+        platform_label = data['label']
+        for browser, data in data['browsers'].iteritems():
             if data.get('versions'):
                 for v in data['versions']:
                     choices.append((
-                        '-'.join([data['platform_name'].lower(), data['browser_name'].lower(), str(v)]),
-                        '%s %s on %s' % (browser, v, platform)
+                        '-'.join([platform, browser, str(v)]),
+                        '%s %s on %s' % (data['label'], v, platform_label)
                     ))
             else:
                 choices.append((
-                    '%s-%s-' % (data['platform_name'].lower(), data['browser_name'].lower()),
-                    '%s on %s' % (browser, platform)
+                    '%s-%s-' % (platform, browser),
+                    '%s on %s' % (data['label'], platform_label)
                 ))
     return choices
 

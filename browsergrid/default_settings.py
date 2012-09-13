@@ -9,83 +9,80 @@ class Settings(object):
     SITE_TITLE = 'Browser Grid'
     SELENIUM_REMOTE_URL = None
     BROWSER_OPTIONS= {
-        'Windows XP': {
-            'Internet Explorer': {
-                'versions': range(6, 9),
-                'browser_name': 'internet explorer',
-                'platform_name': 'WINDOWS',
-            },
-            'Firefox': {
-                'versions': range(2, 16),
-                'browser_name': 'firefox',
-                'platform_name': 'WINDOWS',
-            },
-            'Opera': {
-                'versions': range(9, 13),
-                'browser_name': 'opera', 
-                'platform_name': 'WINDOWS',
-            },
-            'Safari': {
-                'versions': range(3, 6),
-                'browser_name': 'safari',
-                'platform_name': 'WINDOWS',
-            },
-            'Google Chrome': {
-                'versions': [],
-                'browser_name': 'chrome',
-                'platform_name': 'WINDOWS',
-            }
-        },
-        'Windows Vista/7': {
-            'Internet Explorer': {
-                'versions': [9,],
-                'browser_name': 'internet explorer',
-                'platform_name': 'VISTA',
+        'windows': {
+            'label': 'Windows XP/2003',
+            'browsers': {
+                'internet explorer': {
+                    'versions': range(6, 9),
+                    'label': 'Internet Explorer',
+                },
+                'firefox': {
+                    'versions': range(2, 16),
+                    'label': 'Firefox',
+                },
+                'opera': {
+                    'versions': range(9, 13),
+                    'label': 'Opera', 
+                },
+                'safari': {
+                    'versions': range(3, 6),
+                    'label': 'Safari',
+                },
+                'chrome': {
+                    'versions': [],
+                    'label': 'Chrome',
+                },
             },
         },
-        'OSX': {
-            'iPhone': {
-                'versions': [4.3, 5],
-                'browser_name': 'iPhone',
-                'platform_name': 'MAC',
+        'vista': {
+            'label': 'Windows Vista/7',
+            'browsers': {
+                'internet explorer': {
+                    'versions': [9,],
+                    'label': 'Internet Explorer',
+                },
             },
-            'iPad': {
-                'versions': [4.3, 5],
-                'browser_name': 'iPad',
-                'platform_name': 'MAC',
-            },
-            'Firefox': {
-                'versions': range(2, 16),
-                'browser_name': 'firefox',
-                'platform_name': 'MAC',
-            },
-            'Safari': {
-                'versions': [5,],
-                'browser_name': 'safari',
-                'platform_name': 'MAC',
-            },
-            'Google Chrome': {
-                'versions': [],
-                'browser_name': 'chrome',
-                'platform_name': 'MAC',
-            }
         },
-        'Linux': {
-            'Android': {
-                'versions': [4],
-                'browser_name': 'android',
-                'platform_name': 'LINUX',
+        'mac': {
+            'label': 'OSX',
+            'browsers': {
+                'iphone': {
+                    'versions': [4.3, 5],
+                    'label': 'iPhone',
+                },
+                'ipad': {
+                    'versions': [4.3, 5],
+                    'label': 'iPad',
+                },
+                'firefox': {
+                    'versions': range(2, 16),
+                    'label': 'Firefox',
+                },
+                'safari': {
+                    'versions': [5,],
+                    'label': 'Safari',
+                },
+                'chrome': {
+                    'versions': [],
+                    'label': 'Chrome',
+                }
             },
-            'Firefox': {
-                'versions': range(2, 16),
-                'browser_name': 'firefox',
-                'platform_name': 'LINUX',
+        },
+        'linux': {
+            'label': 'Linux',
+            'browsers': {
+                'android': {
+                    'versions': [4],
+                    'label': 'Android',
+                },
+                'firefox': {
+                    'versions': range(2, 16),
+                    'label': 'Firefox',
+                },
+                'chrome': {
+                    'versions': [],
+                    'label': 'Chrome',
+                },
             },
-            'Google Chrome': {
-                'versions': [],
-                'browser_name': 'chrome',
-                'platform_name': 'LINUX',
-            }
-            
         },
     }
