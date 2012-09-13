@@ -25,8 +25,3 @@ class TestRunCheck(FlaskTestCase):
     def test_run_check_saves_screenshot(self):
         run_check(self.driver, self.check)
         self.assertEqual('pic'.encode('base64'), self.check.screenshot)
-
-    def test_run_check_sets_correct_flags(self):
-        run_check(self.driver, self.check)
-        self.assertFalse(self.check.running)
-        self.assertTrue(self.driver.quit.called)

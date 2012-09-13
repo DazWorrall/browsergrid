@@ -25,7 +25,6 @@ class Job(db.Model):
         )
         self.checks.append(check)
         db.session.add(check)
-        db.session.commit()
 
 
 class Check(db.Model):
