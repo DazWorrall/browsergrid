@@ -39,7 +39,17 @@ class TestToRun(FlaskTestCase):
         db.session.commit()
 
     def test_basic_get_runnable_checks(self):
-        self.assertEqual([self.not_ran], list(Check.get_runnable_checks()))
+        not_ran = Check(
+            job_id = self.job.id,
+            url = self.job.url,
+            browser_name = 'firefox',
+            version = '15',
+            platform = 'ANY',
+            try_count = 0,
+        )
+        db.session.add(not_ran)
+        db.session.commit()
+        self.assertEqual([self.not_ran, not_ran], list(Check.get_runnable_checks()))
 
     def test_get_runnable_checks_lock(self):
         self.assertEqual([self.not_ran], list(Check.get_runnable_checks(mark_running=True)))
@@ -47,3 +57,4 @@ class TestToRun(FlaskTestCase):
         self.assertTrue(self.not_ran.running)
         self.assertEqual(1, self.not_ran.try_count)
         self.assertIsInstance(self.not_ran.last_run, datetime)
+

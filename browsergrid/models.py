@@ -63,7 +63,6 @@ class Check(db.Model):
         query = cls.query.filter_by(running=False, try_count=0)
         for field in [cls.platform, cls.browser_name, cls.version]:
             query = query.order_by(field)
-            query = query.group_by(field)
         if mark_running:
             query = query.with_lockmode('update')
             now = datetime.utcnow()

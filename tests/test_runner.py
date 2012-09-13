@@ -54,3 +54,5 @@ class TestRunCheck(FlaskTestCase):
         self.assertEqual(1, self.webdriver.Remote.call_count)
         self.assertEqual(2, self.driver.get.call_count)
         self.assertEqual(1, self.driver.quit.call_count)
+        self.assertFalse(check.running)
+        self.assertFalse(self.check.running)

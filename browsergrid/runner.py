@@ -5,7 +5,6 @@ from itertools import groupby
 def grouper(check): 
     return check.platform, check.browser_name, check.version
 
-
 def runner_main(check_list, url):
     for ((platform, browser_name, version), checks) in groupby(check_list, grouper):
         desired_capabilities={
@@ -19,14 +18,14 @@ def runner_main(check_list, url):
             command_executor=url,
             desired_capabilities=desired_capabilities,
         )
-        try:
-            for check in checks:
+        for check in checks:
+            try:
                 driver.get(check.url)
                 check.screenshot = driver.get_screenshot_as_base64()
-        except Exception, e:
-            print e
-        finally:
-            check.running = False
-            db.session.add(check)
-            db.session.commit()
-            driver.quit()
+            except Exception, e:
+                print e
+            finally:
+                check.running = False
+                db.session.add(check)
+        db.session.commit()
+        driver.quit()
