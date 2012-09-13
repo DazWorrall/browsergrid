@@ -25,7 +25,7 @@
                             <td><a href="{{ url_for('.job_detail', _id=j.id) }}">{{ j.id}}</a></td>
                             <td>{{ j.url }}</td>
                             <td>{{ j.checks.count()}}</td>
-                            <td>{% if not j.running %}Not {% endif %}Running</td>
+                            <td class="status status-{{ j.status.lower() }}">{{ j.status }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

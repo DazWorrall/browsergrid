@@ -25,6 +25,23 @@ class Job(db.Model):
         )
         self.checks.append(check)
         db.session.add(check)
+        return check
+
+    @property
+    def status(self):
+        '''
+        Returns a string detailing the status of this job:
+            
+            Pending: Job not started
+            Running: Job in flight
+            Complete: All checks ran
+        '''
+        checks = list(self.checks)
+        if any([c.running for c in checks]):
+            return 'Running'
+        if all([c.running == False and c.try_count > 0 for c in checks]):
+            return 'Complete'
+        return 'Pending'
 
 
 class Check(db.Model):
