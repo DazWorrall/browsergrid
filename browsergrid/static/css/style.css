@@ -1,1 +1,14 @@
 // Custom style bits
+.thumbnail.right-caption > img {
+    float: left;
+    margin-right: 9px;
+}
+
+.thumbnail.right-caption {
+    float: left;
+}
+
+.thumbnail.right-caption > .caption {
+    padding: 4px;
+}
+

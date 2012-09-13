@@ -1,13 +1,17 @@
 {% extends "layout.html" %}
-{% block title %}{{ super() }} - Home{% endblock title %}
+{% block title %}{{ super() }} - Job {{ job.id }}{% endblock title %}
 {% block content %}
     <div class="row">
-        <div class="span10 offset1"> 
-            <h1>{{ job.url }}</h1>
-            {% for check in job.checks %}
-                {{ check }} Running: {{ check.running }}
-                <img class="img-polaroid" src="data:image/png;base64,{{ check.screenshot }}"/>
-            {% endfor %}
-        </div>
+        {% for check in job.checks %}
+            <div class="thumbnail right-caption span12"> 
+                <img class="span8" src="data:image/png;base64,{{ check.screenshot }}"/>
+                <div class="caption">
+                    <h5>{{ job.url }}</h5>
+                    <p>{{ check.browser_name|capitalize }} {{ check.version }}</p>
+                    </dl>
+                </div>
+            </div>
+        {% endfor %}
     </div>
+
 {% endblock content %}
