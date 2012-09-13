@@ -21,6 +21,6 @@ def runner_main(checks, url):
             print e
         finally:
             check.running = False
-            driver.quit()
             db.session.add(check)
             db.session.commit()
+            driver.quit()
