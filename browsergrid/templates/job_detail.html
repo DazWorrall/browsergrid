@@ -6,7 +6,7 @@
             <h1>{{ job.url }}</h1>
             {% for check in job.checks %}
                 {{ check }} Running: {{ check.running }}
-                <img class="img-polaroid" src="data:image/gif;base64,{{ check.screenshot }}"/>
+                <img class="img-polaroid" src="data:image/png;base64,{{ check.screenshot }}"/>
             {% endfor %}
         </div>
     </div>
