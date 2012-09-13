@@ -7,3 +7,4 @@ class Settings(object):
     DEBUG = True
     SECRET_KEY = "\xf3'Q\x10\x01\x81\xcb\xberZ/\x19\x93\xa7\x94\xfe\x9aa\x81\xb6\xb55Z\xe6"
     SITE_TITLE = 'Browser Grid'
+    SELENIUM_REMOTE_URL = None

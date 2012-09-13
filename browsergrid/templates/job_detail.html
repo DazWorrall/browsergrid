@@ -5,7 +5,8 @@
         <div class="span10 offset1"> 
             <h1>{{ job.url }}</h1>
             {% for check in job.checks %}
-                {{ check }}
+                {{ check }} Running: {{ check.running }}
+                <img class="img-polaroid" src="data:image/gif;base64,{{ check.screenshot }}"/>
             {% endfor %}
         </div>
     </div>

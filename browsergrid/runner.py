@@ -7,10 +7,20 @@ def run_check(driver, check):
     check.running = False
     return check
 
-def runner_main(app):
+def runner_main(app, url=None):
+    from selenium import webdriver
     with app.app_context():
         checks = Check.to_run(lock=True)
-        for c in checks:
-            run_check(c)
-            db.session.add(c)
+        for check in checks:
+            driver = webdriver.Remote(
+                command_executor=url or app.config.SELENIUM_REMOTE_URL,
+                desired_capabilities={
+                    'browserName': check.browser_name,
+                    'version': check.version,
+                    'javascriptEnabled': check.javascript_enabled,
+                    'platform': check.platform,
+                },
+            )
+            run_check(driver, check)
+            db.session.add(check)
         db.session.commit()

@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+from browsergrid.runner import runner_main
+from browsergrid.app import create_app
+import argparse
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Run outstanding checks')
+    parser.add_argument('--url', default=None,
+        help='The url passed to the remote webdriver, defaults '
+             'to app.config.SELENIUM_REMOTE_URL if not given'
+    )
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    args = parse_args()
+    runner_main(create_app(), url=args.url)
