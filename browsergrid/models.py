@@ -58,10 +58,10 @@ class Check(db.Model):
     last_run = db.Column(db.DateTime, nullable=True, default=None)
 
     @classmethod
-    def to_run(cls, lock=False):
+    def get_runnable_checks(cls, mark_running=False):
         checks = []
         query = cls.query.filter_by(running=False, try_count=0)
-        if lock:
+        if mark_running:
             query = query.with_lockmode('update')
             now = datetime.utcnow()
             for c in query:

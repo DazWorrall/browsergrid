@@ -22,4 +22,7 @@ if __name__ == '__main__':
     args = parse_args()
     app = create_app()
     with app.app_context():
-        runner_main(Check.to_run(lock=True), args.url or app.config['SELENIUM_REMOTE_URL'])
+        runner_main(
+            Check.get_runnable_checks(mark_running=True), 
+            args.url or app.config['SELENIUM_REMOTE_URL'],
+        )

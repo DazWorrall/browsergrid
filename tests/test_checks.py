@@ -38,12 +38,12 @@ class TestToRun(FlaskTestCase):
             db.session.add(c)
         db.session.commit()
 
-    def test_basic_to_run(self):
-        self.assertEqual([self.not_ran], list(Check.to_run()))
+    def test_basic_get_runnable_checks(self):
+        self.assertEqual([self.not_ran], list(Check.get_runnable_checks()))
 
-    def test_to_run_lock(self):
-        self.assertEqual([self.not_ran], list(Check.to_run(lock=True)))
-        self.assertEqual([], list(Check.to_run(lock=True)))
+    def test_get_runnable_checks_lock(self):
+        self.assertEqual([self.not_ran], list(Check.get_runnable_checks(mark_running=True)))
+        self.assertEqual([], list(Check.get_runnable_checks(mark_running=True)))
         self.assertTrue(self.not_ran.running)
         self.assertEqual(1, self.not_ran.try_count)
         self.assertIsInstance(self.not_ran.last_run, datetime)

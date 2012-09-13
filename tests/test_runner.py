@@ -31,3 +31,9 @@ class TestRunCheck(FlaskTestCase):
         self.driver.get_screenshot_as_base64.return_value = 'pic'.encode('base64')
         runner_main([self.check], 'http://foo.bar.com')
         self.assertEqual('pic'.encode('base64'), self.check.screenshot)
+
+    def test_runner_exception_handled(self):
+        self.driver.get.side_effect = ValueError
+        runner_main([self.check], 'http://foo.bar.com')
+        self.assertFalse(self.check.running)
+        self.assertTrue(self.driver.quit.called)
