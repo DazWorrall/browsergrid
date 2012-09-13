@@ -48,9 +48,9 @@ class Check(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     job_id = db.Column(db.Integer, db.ForeignKey('job.id'))
     url = db.Column(db.String(length=255), default='')
+    platform = db.Column(db.String(length=25), default='ANY')
     browser_name = db.Column(db.String(length=25), default='firefox')
     version = db.Column(db.String(length=25), default='')
-    platform = db.Column(db.String(length=25), default='ANY')
     javascript_enabled = db.Column(db.Boolean, default=True)
     screenshot = db.Column(db.Text, nullable=True, default=None)
     running = db.Column(db.Boolean, default=False)
@@ -61,6 +61,9 @@ class Check(db.Model):
     def get_runnable_checks(cls, mark_running=False):
         checks = []
         query = cls.query.filter_by(running=False, try_count=0)
+        for field in [cls.platform, cls.browser_name, cls.version]:
+            query = query.order_by(field)
+            query = query.group_by(field)
         if mark_running:
             query = query.with_lockmode('update')
             now = datetime.utcnow()
