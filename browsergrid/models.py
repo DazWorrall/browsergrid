@@ -1,4 +1,5 @@
 from flask.ext.sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -46,8 +47,11 @@ class Check(db.Model):
         query = cls.query.filter_by(running=False, try_count=0)
         if lock:
             query = query.with_lockmode('update')
+            now = datetime.utcnow()
             for c in query:
                 c.running = True
+                c.last_run = now
+                c.try_count += 1
                 db.session.add(c)
                 checks.append(c)
             db.session.commit()
