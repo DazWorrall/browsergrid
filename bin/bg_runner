@@ -6,6 +6,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from browsergrid.runner import runner_main
 from browsergrid.app import create_app
+from browsergrid.models import Check
 import argparse
 
 def parse_args():
@@ -19,4 +20,6 @@ def parse_args():
 
 if __name__ == '__main__':
     args = parse_args()
-    runner_main(create_app(), url=args.url)
+    app = create_app()
+    with app.app_context():
+        runner_main(Check.to_run(lock=True), args.url or app.config['SELENIUM_REMOTE_URL'])

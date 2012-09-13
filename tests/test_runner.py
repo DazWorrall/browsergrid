@@ -1,7 +1,7 @@
 from browsergrid.models import db, Check, Job
-from browsergrid.runner import run_check
+from browsergrid.runner import runner_main
 from .shared import FlaskTestCase
-from mock import Mock
+from mock import Mock, patch
 
 class TestRunCheck(FlaskTestCase):
 
@@ -19,9 +19,15 @@ class TestRunCheck(FlaskTestCase):
         )
         db.session.add(self.check)
         db.session.commit()
-        self.driver = Mock()
-        self.driver.get_screenshot_as_base64.return_value = 'pic'.encode('base64')
+        self.patcher = patch('browsergrid.runner.webdriver')
+        self.webdriver = self.patcher.start()
+        self.driver = self.webdriver.Remote.return_value = Mock()
 
+    def tearDown(self):
+        FlaskTestCase.tearDown(self)
+        self.patcher.stop()
+        
     def test_run_check_saves_screenshot(self):
-        run_check(self.driver, self.check)
+        self.driver.get_screenshot_as_base64.return_value = 'pic'.encode('base64')
+        runner_main([self.check], 'http://foo.bar.com')
         self.assertEqual('pic'.encode('base64'), self.check.screenshot)
