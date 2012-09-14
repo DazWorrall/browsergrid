@@ -1,17 +1,19 @@
 {% extends "layout.html" %}
-{% block title %}{{ super() }} - Job {{ job.id }}{% endblock title %}
+{% block title %}{{ super() }} - {{ job.title }}{% endblock title %}
 {% block content %}
-    <div class="row">
-        {% for check in job.checks %}
-            <div class="thumbnail right-caption span12"> 
-                <img class="span8" src="data:image/png;base64,{{ check.screenshot }}"/>
-                <div class="caption">
-                    <h5>{{ job.url }}</h5>
-                    <p>{{ check.browser_name|capitalize }} {{ check.version }}</p>
-                    </dl>
+    {% for url, checks in job.checks|groupby('url') %}
+        <div class="row">
+            <h2>{{ url }}</h2>
+            {% for check in checks %}
+                <div class="thumbnail right-caption span12"> 
+                    <img class="span8" src="{{ url_for('.screenshot', check_id=check.id) }}"/>
+                    <div class="caption">
+                        <h5>{{ check.url }}</h5>
+                        <p>{{ config['BROWSER_LABELS'][check.browser_name] }} {{ check.version }} on {{ config['PLATFORM_LABELS'][check.platform] }}</p>
+                        </dl>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
-
+            {% endfor %}
+        </div>
+    {% endfor %}
 {% endblock content %}
