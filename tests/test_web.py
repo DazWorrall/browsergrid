@@ -18,19 +18,19 @@ class TestNewJob(FlaskTestCase):
             '/new',
             data = {
                 'title': 'My check',
-                'checks': ['windows-internet explorer-8', u'linux-firefox-2'],
+                'checks': [u'linux-firefox-2'],
+                'urls': 'http://foo.com\nhttp://bar.com',
             },
         )
         job = Job.query.get(1)
         checks = list(job.checks)
         self.assertEqual(2, len(checks))
-        check1, check2 = checks
-        self.assertEqual('windows', check1.platform)
-        self.assertEqual('internet explorer', check1.browser_name)
-        self.assertEqual('8', check1.version)
-        self.assertEqual('linux', check2.platform)
-        self.assertEqual('firefox', check2.browser_name)
-        self.assertEqual('2', check2.version)
+        for check in checks:
+            self.assertEqual('linux', check.platform)
+            self.assertEqual('firefox', check.browser_name)
+            self.assertEqual('2', check.version)
+        self.assertEqual('http://foo.com', checks[0].url)
+        self.assertEqual('http://bar.com', checks[1].url)
 
     def test_new_job_redirects_to_result_page(self):
         resp = self.client.post(

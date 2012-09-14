@@ -3,7 +3,7 @@ from flask.ext.wtf import (Form, TextField, TextAreaField, DecimalField,
                           BooleanField, ValidationError, PasswordField, RadioField,
                           IntegerField, SelectMultipleField)
 from wtforms.fields import Field
-from wtforms.widgets import ListWidget, CheckboxInput
+from wtforms.widgets import ListWidget, CheckboxInput, TextArea
 from flask.ext.wtf.html5 import EmailField, DateField, URLField
 from flask import current_app
 
@@ -36,8 +36,25 @@ class MultiCheckboxField(SelectMultipleField):
     widget = ListWidget(prefix_label=False)
     option_widget = CheckboxInput()
 
+class LineBreakListField(Field):
+    widget = TextArea()
+
+    def _value(self):
+        if self.data:
+            return u', '.join(self.data)
+        else:
+            return u''
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            text = valuelist[0].replace('\r\n', '\n')
+            self.data = [x.strip() for x in text.split('\n')]
+        else:
+            self.data = []
+
 
 class NewJobForm(Form):
     title = TextField('Title', [validators.required()])
     notes = TextAreaField('Notes', [validators.optional()])
     checks = MultiCheckboxField('Checks') 
+    urls = LineBreakListField('URLs to Check') 
