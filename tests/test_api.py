@@ -16,6 +16,18 @@ class TestGet(FlaskTestCase):
         )
         db.session.commit()
 
+    def test_get_labels(self):
+        browser = self.client.get('/api/browser_labels')
+        platform = self.client.get('/api/platform_labels')
+        self.assertEqual(
+            self.app.config['BROWSER_LABELS'],
+            json.loads(browser.data),
+        )
+        self.assertEqual(
+            self.app.config['PLATFORM_LABELS'],
+            json.loads(platform.data),
+        )
+
     def test_get_check(self):
         resp = self.client.get('/api/check/%d' % self.check.id)
         self.assert200(resp)

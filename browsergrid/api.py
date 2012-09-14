@@ -14,6 +14,14 @@ def check_to_json(check):
         'status': 'pending',
     }
 
+@api.route('/browser_labels')
+def get_browser_labels():
+    return jsonify(current_app.config['BROWSER_LABELS'])
+
+@api.route('/platform_labels')
+def get_platform_labels():
+    return jsonify(current_app.config['PLATFORM_LABELS'])
+
 @api.route('/check/<int:check_id>')
 def get_check(check_id):
     check = Check.query.get_or_404(check_id)
