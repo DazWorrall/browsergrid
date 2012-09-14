@@ -10,7 +10,7 @@ class TestRunCheck(FlaskTestCase):
         self.job = Job.new('http://goo.com')
         self.check = Check(
             job_id = self.job.id,
-            url = self.job.url,
+            url = 'http://foo.com',
             browser_name = 'firefox',
             version = '15',
             platform = 'ANY',
@@ -41,7 +41,7 @@ class TestRunCheck(FlaskTestCase):
     def test_runner_reuses_sessions_when_it_can(self):
         check = Check(
             job_id = self.job.id,
-            url = self.job.url,
+            url = 'http://foo.bar.com',
             browser_name = 'firefox',
             version = '15',
             platform = 'ANY',

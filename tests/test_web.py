@@ -7,17 +7,17 @@ class TestNewJob(FlaskTestCase):
         resp = self.client.post(
             '/new',
             data = {
-                'url': 'http://foo.bar.com',
+                'title': 'My Test',
             },
         )
         job = Job.query.get(1)
-        self.assertEqual('http://foo.bar.com', job.url)
+        self.assertEqual('My Test', job.title)
 
     def test_new_job_creates_checksb(self):
         resp = self.client.post(
             '/new',
             data = {
-                'url': 'http://foo.bar.com',
+                'title': 'My check',
                 'checks': ['windows-internet explorer-8', u'linux-firefox-2'],
             },
         )
@@ -36,7 +36,7 @@ class TestNewJob(FlaskTestCase):
         resp = self.client.post(
             '/new',
             data = {
-                'url': 'http://foo.bar.com',
+                'title': 'My check',
             },
         )
         self.assertRedirects(resp, 'http://localhost/job/1')
@@ -46,8 +46,9 @@ class TestFetchScreenshot(FlaskTestCase):
 
     def setUp(self):
         FlaskTestCase.setUp(self) 
-        self.job = Job.new(url='http://foobar.com')
+        self.job = Job.new('http://foobar.com')
         self.check = self.job.add_check(
+            url = 'http://foo.bar.com',
             browser_name = 'firefox',
             version = '15',
             platform = 'any',

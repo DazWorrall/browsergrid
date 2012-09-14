@@ -5,7 +5,8 @@
         <div class="span10 offset1"> 
             <form class="form-inline well" method="POST">
                 {{ form.hidden_tag() }}
-                {{ form.url(class="span8", placeholder="http://www.google.com") }}
+                {{ form.title(class="span8", placeholder="http://www.google.com") }}
+                {{ form.notes(class="span8", placeholder="http://www.google.com") }}
                 <button type="submit" class="btn">Start</button>
                 <ul class="unstyled">
                     {% for value, name in form.checks.choices %}

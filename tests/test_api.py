@@ -7,9 +7,10 @@ class TestGet(FlaskTestCase):
     def setUp(self):
         FlaskTestCase.setUp(self)
         self.job = Job.new(
-            url = 'http://www.foo.com',
+            title = 'Test Job',
         )
         self.check = self.job.add_check(
+            url = 'http://www.foo.com',
             browser_name = 'firefox',
             platform = 'windows',
             version = '1',

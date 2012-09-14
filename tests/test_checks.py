@@ -9,7 +9,7 @@ class TestToRun(FlaskTestCase):
         self.job = Job.new('http://goo.com')
         self.ran_once = Check(
             job_id = self.job.id,
-            url = self.job.url,
+            url = 'http://www.foo.com',
             browser_name = 'firefox',
             version = '15',
             platform = 'ANY',
@@ -18,7 +18,7 @@ class TestToRun(FlaskTestCase):
         )
         self.not_ran = Check(
             job_id = self.job.id,
-            url = self.job.url,
+            url = 'http://www.foo.com',
             browser_name = 'firefox',
             version = '15',
             platform = 'ANY',
@@ -26,7 +26,7 @@ class TestToRun(FlaskTestCase):
         )
         self.in_flight = Check(
             job_id = self.job.id,
-            url = self.job.url,
+            url = 'http://www.foo.com',
             browser_name = 'firefox',
             version = '15',
             platform = 'ANY',
@@ -41,7 +41,7 @@ class TestToRun(FlaskTestCase):
     def test_basic_get_runnable_checks(self):
         not_ran = Check(
             job_id = self.job.id,
-            url = self.job.url,
+            url = 'http://www.foo.com',
             browser_name = 'firefox',
             version = '15',
             platform = 'ANY',

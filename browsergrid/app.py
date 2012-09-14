@@ -33,10 +33,11 @@ def new():
     form = NewJobForm()
     form.checks.choices = create_browser_choices(current_app.config['BROWSER_OPTIONS'])
     if form.validate_on_submit():
-        job = Job.new(url=form.url.data)
+        job = Job.new(title = form.title.data)
         for check in form.checks.data:
             p, bn, ver = check.split('-', 3)
             job.add_check(
+                url = 'http://foo.com',
                 browser_name = bn,
                 version = ver,
                 platform = p,

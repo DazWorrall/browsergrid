@@ -8,6 +8,7 @@ class TestJobStatus(FlaskTestCase):
         FlaskTestCase.setUp(self)
         self.job = Job.new('http://goo.com')
         self.check = self.job.add_check(
+            url = 'http://foo.com',
             browser_name = 'firefox',
             version = '15',
             platform = 'ANY',

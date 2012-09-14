@@ -38,5 +38,6 @@ class MultiCheckboxField(SelectMultipleField):
 
 
 class NewJobForm(Form):
-    url = URLField('Username', [validators.Required('URL is required')])
+    title = TextField('Title', [validators.required()])
+    notes = TextAreaField('Notes', [validators.optional()])
     checks = MultiCheckboxField('Checks') 

@@ -5,19 +5,20 @@ db = SQLAlchemy()
 
 class Job(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(length=255), default='')
+    title = db.Column(db.String(length=255), default='')
+    notes = db.Column(db.Text, default='')
     checks = db.relationship('Check', backref='job', lazy='dynamic')
 
     @classmethod
-    def new(cls, url):
-        job = cls(url=url)
+    def new(cls, title, notes=''):
+        job = cls(title=title, notes=notes)
         db.session.add(job)
         db.session.commit()
         return job
 
-    def add_check(self, browser_name, version, platform, javascript_enabled=True):
+    def add_check(self, url, browser_name, version, platform, javascript_enabled=True):
         check = Check(
-            url = self.url,
+            url = url,
             browser_name = browser_name,
             version = version,
             platform = platform,
