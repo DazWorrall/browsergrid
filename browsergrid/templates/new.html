@@ -4,20 +4,22 @@
     <div class="row">
         <div class="span10 offset1"> 
             <form class="form-inline well" method="POST">
-                {{ form.hidden_tag() }}
-                {{ form.title(class="span8", placeholder="http://www.google.com") }}
-                {{ form.notes(class="span8", placeholder="http://www.google.com") }}
-                <button type="submit" class="btn">Start</button>
-                <ul class="unstyled">
-                    {% for value, name in form.checks.choices %}
-                        <li>
-                            <label class="checkbox">
-                                <input name="checks" type="checkbox" value="{{ value }}" />
-                                {{ name }}
-                            </label>
-                        </li>
-                    {% endfor %}
-                </ul>
+                <fieldset>
+                    {{ form.hidden_tag() }}
+                    {{ form.title(class="", placeholder="Title (eg. Google Homepage)") }}
+                    {{ form.urls(class="span8") }}
+                    <button type="submit" class="btn">Start</button>
+                    <ul class="unstyled">
+                        {% for value, name in form.checks.choices %}
+                            <li>
+                                <label class="checkbox">
+                                    <input name="checks" type="checkbox" value="{{ value }}" />
+                                    {{ name }}
+                                </label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </fieldset>
             </form>
         </div>
     </div>

@@ -54,7 +54,7 @@ class LineBreakListField(Field):
 
 
 class NewJobForm(Form):
-    title = TextField('Title', [validators.required()])
+    title = TextField('Job Title', [validators.required()])
     notes = TextAreaField('Notes', [validators.optional()])
     checks = MultiCheckboxField('Checks') 
-    urls = LineBreakListField('URLs to Check') 
+    urls = LineBreakListField('URLs to Check', [validators.required()], default=['http://www.google.com']) 
