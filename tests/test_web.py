@@ -1,5 +1,5 @@
 from .shared import FlaskTestCase
-from browsergrid.models import Job
+from browsergrid.models import Job, db
 
 class TestNewJob(FlaskTestCase):
 
@@ -40,3 +40,24 @@ class TestNewJob(FlaskTestCase):
             },
         )
         self.assertRedirects(resp, 'http://localhost/job/1')
+
+
+class TestFetchScreenshot(FlaskTestCase):
+
+    def setUp(self):
+        FlaskTestCase.setUp(self) 
+        self.job = Job.new(url='http://foobar.com')
+        self.check = self.job.add_check(
+            browser_name = 'firefox',
+            version = '15',
+            platform = 'any',
+        )
+        self.check.screenshot = 'TEST'.encode('base64')
+        db.session.add(self.check)
+        db.session.commit()
+    
+    def test_screenshot_served_correctly(self):
+        resp = self.client.get('/screenshot/%d' % self.check.id)
+        self.assert200(resp)
+        self.assertEqual('TEST', resp.data)
+        self.assertEqual('image/png', resp.headers.get('Content-Type'))

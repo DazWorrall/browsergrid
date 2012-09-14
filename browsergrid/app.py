@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from __future__ import with_statement
-from .models import db, Job
+from .models import db, Job, Check
 from flask import (Flask, request, session, g, redirect, url_for, abort,
      render_template, flash, Blueprint, current_app)
 from .default_settings import Settings
@@ -50,6 +50,10 @@ def job_detail(_id):
     job = Job.query.get_or_404(_id)
     return render_template('job_detail.html', job=job)
 
+@bg.route('/screenshot/<int:check_id>')
+def screenshot(check_id):
+    check = Check.query.get_or_404(check_id)
+    return check.screenshot.decode('base64'), 200, {'Content-Type': 'image/png'}
 app = create_app()
 
 if __name__=="__main__":
