@@ -8,6 +8,7 @@ class TestNewJob(FlaskTestCase):
             '/new',
             data = {
                 'title': 'My Test',
+                'urls': 'http://foo.com\nhttp://bar.com',
             },
         )
         job = Job.query.get(1)
@@ -37,6 +38,7 @@ class TestNewJob(FlaskTestCase):
             '/new',
             data = {
                 'title': 'My check',
+                'urls': 'http://foo.com\nhttp://bar.com',
             },
         )
         self.assertRedirects(resp, 'http://localhost/job/1')
