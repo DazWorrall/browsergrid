@@ -5,6 +5,7 @@ from flask import (Flask, request, session, g, redirect, url_for, abort,
      render_template, flash, Blueprint, current_app)
 from .default_settings import Settings
 from .forms import NewJobForm, create_browser_choices
+from .api import api
 
 bg = Blueprint('bg', __name__)
 
@@ -14,6 +15,7 @@ def create_app(conf_obj=Settings, envvar='BG_SETTINGS'):
     app.config.from_envvar(envvar, silent=True)
     db.init_app(app)
     app.register_blueprint(bg)
+    app.register_blueprint(api, url_prefix='/api')
     return app
 
 def init_db(app):
