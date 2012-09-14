@@ -5,22 +5,24 @@ from flask.ext.wtf import (Form, TextField, TextAreaField, DecimalField,
 from wtforms.fields import Field
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask.ext.wtf.html5 import EmailField, DateField, URLField
+from flask import current_app
 
 def create_browser_choices(options):
     choices = []
-    for platform, data in options.iteritems():
-        platform_label = data['label']
-        for browser, data in data['browsers'].iteritems():
-            if data.get('versions'):
-                for v in data['versions']:
+    for platform, browsers in options.iteritems():
+        platform_label = current_app.config['PLATFORM_LABELS'][platform]
+        for browser, versions in browsers.iteritems():
+            browser_label = current_app.config['BROWSER_LABELS'][browser]
+            if versions:
+                for v in versions:
                     choices.append((
                         '-'.join([platform, browser, str(v)]),
-                        '%s %s on %s' % (data['label'], v, platform_label)
+                        '%s %s on %s' % (browser_label, v, platform_label)
                     ))
             else:
                 choices.append((
                     '%s-%s-' % (platform, browser),
-                    '%s on %s' % (data['label'], platform_label)
+                    '%s on %s' % (browser_label, platform_label)
                 ))
     return choices
 

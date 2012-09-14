@@ -9,81 +9,43 @@ class Settings(object):
     SITE_TITLE = 'Browser Grid'
     SELENIUM_REMOTE_URL = None
     RECENT_JOBS_COUNT = 5
+    PLATFORM_LABELS = {
+        'windows': 'Windows XP/2003',
+        'vista': 'Windows Vista/7/2008',
+        'linux': 'Linux/Android',
+        'mac': 'OSX',
+    }
+    BROWSER_LABELS = {
+        'internet explorer': 'Internet Explorer',
+        'chrome': 'Google Chrome',
+        'opera' : 'Opera',
+        'firefox': 'Firefox',
+        'safari': 'Safari',
+        'iphone': 'iPhone',
+        'ipad': 'iPad',
+        'android': 'Android',
+    }
     BROWSER_OPTIONS= {
         'windows': {
-            'label': 'Windows XP/2003',
-            'browsers': {
-                'internet explorer': {
-                    'versions': range(6, 9),
-                    'label': 'Internet Explorer',
-                },
-                'firefox': {
-                    'versions': range(2, 16),
-                    'label': 'Firefox',
-                },
-                'opera': {
-                    'versions': range(9, 13),
-                    'label': 'Opera', 
-                },
-                'safari': {
-                    'versions': range(3, 6),
-                    'label': 'Safari',
-                },
-                'chrome': {
-                    'versions': [],
-                    'label': 'Chrome',
-                },
-            },
+            'internet explorer': range(6, 9),
+            'firefox': range(2, 16),
+            'opera': range(9, 13),
+            'safari': range(3, 6),
+            'chrome': [],
         },
         'vista': {
-            'label': 'Windows Vista/7',
-            'browsers': {
-                'internet explorer': {
-                    'versions': [9,],
-                    'label': 'Internet Explorer',
-                },
-            },
+            'internet explorer': [9,],
         },
         'mac': {
-            'label': 'OSX',
-            'browsers': {
-                'iphone': {
-                    'versions': [4.3, 5],
-                    'label': 'iPhone',
-                },
-                'ipad': {
-                    'versions': [4.3, 5],
-                    'label': 'iPad',
-                },
-                'firefox': {
-                    'versions': range(2, 16),
-                    'label': 'Firefox',
-                },
-                'safari': {
-                    'versions': [5,],
-                    'label': 'Safari',
-                },
-                'chrome': {
-                    'versions': [],
-                    'label': 'Chrome',
-                }
-            },
+            'iphone': [4.3, 5],
+            'ipad': [4.3, 5],
+            'firefox': range(2, 16),
+            'safari': [5,],
+            'chrome': [],
         },
         'linux': {
-            'label': 'Linux',
-            'browsers': {
-                'android': {
-                    'versions': [4],
-                    'label': 'Android',
-                },
-                'firefox': {
-                    'versions': range(2, 16),
-                    'label': 'Firefox',
-                },
-                'chrome': {
-                    'versions': [],
-                    'label': 'Chrome',
-                },
-            },
+            'android': [4],
+            'firefox': range(2, 16),
+            'chrome': [],
         },
     }
