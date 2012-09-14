@@ -1,14 +1,4 @@
-// Custom style bits
-.thumbnail.right-caption > img {
-    float: left;
-    margin-right: 9px;
+.thumbnail .thumbnail-container {
+    height: 400px;
+    overflow: hidden;
 }
-
-.thumbnail.right-caption {
-    float: left;
-}
-
-.thumbnail.right-caption > .caption {
-    padding: 4px;
-}
-

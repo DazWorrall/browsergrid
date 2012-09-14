@@ -8,7 +8,9 @@
                 {% for check in checks %}
                     <li class="span4">
                         <div class="thumbnail">
-                            <img src="{{ url_for('.screenshot', check_id=check.id) }}"/>
+                            <div class="thumbnail-container">
+                                <img src="{{ url_for('.screenshot', check_id=check.id) }}"/>
+                            </div>
                             <div class="caption">
                                 <p>{{ config['BROWSER_LABELS'][check.browser_name] }} {{ check.version }} on {{ config['PLATFORM_LABELS'][check.platform] }}</p>
                             </div>
