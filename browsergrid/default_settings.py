@@ -41,7 +41,7 @@ class Settings(object):
         'mac': {
             'iphone': [4.3, 5],
             'ipad': [4.3, 5],
-            'firefox': range(2, 16),
+            'firefox': range(2, 15),
             'safari': [5,],
             'chrome': [],
         },
