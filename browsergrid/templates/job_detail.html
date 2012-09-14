@@ -3,17 +3,19 @@
 {% block content %}
     {% for url, checks in job.checks|groupby('url') %}
         <div class="row">
-            <h2>{{ url }}</h2>
-            {% for check in checks %}
-                <div class="thumbnail right-caption span12"> 
-                    <img class="span8" src="{{ url_for('.screenshot', check_id=check.id) }}"/>
-                    <div class="caption">
-                        <h5>{{ check.url }}</h5>
-                        <p>{{ config['BROWSER_LABELS'][check.browser_name] }} {{ check.version }} on {{ config['PLATFORM_LABELS'][check.platform] }}</p>
-                        </dl>
-                    </div>
-                </div>
-            {% endfor %}
+            <h3>{{ url }}</h3>
+            <ul class="thumbnails">
+                {% for check in checks %}
+                    <li class="span4">
+                        <div class="thumbnail">
+                            <img src="{{ url_for('.screenshot', check_id=check.id) }}"/>
+                            <div class="caption">
+                                <p>{{ config['BROWSER_LABELS'][check.browser_name] }} {{ check.version }} on {{ config['PLATFORM_LABELS'][check.platform] }}</p>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     {% endfor %}
 {% endblock content %}
