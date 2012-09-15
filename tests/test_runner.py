@@ -38,6 +38,12 @@ class TestRunCheck(FlaskTestCase):
         self.assertFalse(self.check.running)
         self.assertTrue(self.driver.quit.called)
 
+    def test_runner_driver_connect_exception_handled(self):
+        self.webdriver.Remote.side_effect = ValueError
+        runner_main([self.check], 'http://foo.bar.com')
+        self.assertFalse(self.check.running)
+        self.assertFalse(self.driver.quit.called)
+
     def test_runner_reuses_sessions_when_it_can(self):
         check = Check(
             job_id = self.job.id,
