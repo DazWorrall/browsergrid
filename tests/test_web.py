@@ -64,3 +64,9 @@ class TestFetchScreenshot(FlaskTestCase):
         self.assert200(resp)
         self.assertEqual('TEST', resp.data)
         self.assertEqual('image/png', resp.headers.get('Content-Type'))
+    
+    def test_screenshot_with_bad_padding_served_correctly(self):
+        self.check.screenshot = 'dGVzdA='
+        resp = self.client.get('/screenshot/%d' % self.check.id)
+        self.assert200(resp)
+        self.assertEqual('test', resp.data)

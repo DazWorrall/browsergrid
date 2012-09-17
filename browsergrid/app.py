@@ -55,7 +55,10 @@ def job_detail(_id):
 @bg.route('/screenshot/<int:check_id>')
 def screenshot(check_id):
     check = Check.query.get_or_404(check_id)
-    return check.screenshot.decode('base64'), 200, {'Content-Type': 'image/png'}
+    blob = ''.join(check.screenshot.split())
+    while len(blob) % 4 != 0:
+        blob += '='
+    return blob.decode('base64'), 200, {'Content-Type': 'image/png'}
 app = create_app()
 
 if __name__=="__main__":
