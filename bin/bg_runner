@@ -23,6 +23,7 @@ if __name__ == '__main__':
     app = create_app()
     with app.app_context():
         runner_main(
-            Check.get_runnable_checks(mark_running=True), 
-            args.url or app.config['SELENIUM_REMOTE_URL'],
+            check_list = Check.get_runnable_checks(mark_running=True), 
+            url = args.url or app.config['SELENIUM_REMOTE_URL'],
+            ss_path = app.config['SS_ROOT'],
         )

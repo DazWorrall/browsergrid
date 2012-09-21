@@ -13,7 +13,7 @@ class TestToRun(FlaskTestCase):
             browser_name = 'firefox',
             version = '15',
             platform = 'ANY',
-            screenshot = 'ANIMAGE'.encode('base64'),
+            filename = 'check.png',
             try_count = 1,
         )
         self.not_ran = Check(

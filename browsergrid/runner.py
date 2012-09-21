@@ -1,11 +1,12 @@
 from .models import Check, db
 from selenium import webdriver
 from itertools import groupby
+from os import path
 
 def grouper(check): 
     return check.platform, check.browser_name, check.version
 
-def runner_main(check_list, url):
+def runner_main(check_list, url, ss_path):
     for ((platform, browser_name, version), checks) in groupby(check_list, grouper):
         checks = list(checks)
         driver = None
@@ -24,7 +25,8 @@ def runner_main(check_list, url):
             for check in checks:
                 try:
                     driver.get(check.url)
-                    check.screenshot = driver.get_screenshot_as_base64()
+                    with open(path.join(ss_path, check.filename), 'w') as f:
+                        f.write(driver.get_screenshot_as_base64().decode('base64'))
                 except Exception, e:
                     print e
                     continue

@@ -10,6 +10,7 @@ class Settings(object):
     SITE_TITLE = 'Browser Grid'
     SELENIUM_REMOTE_URL = None
     RECENT_JOBS_COUNT = 5
+    SS_ROOT = '/tmp' # Where screenshots are saved
     PLATFORM_LABELS = {
         'windows': 'Windows XP/2003',
         'vista': 'Windows Vista/7/2008',

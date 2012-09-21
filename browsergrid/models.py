@@ -1,5 +1,6 @@
 from flask.ext.sqlalchemy import SQLAlchemy
 from datetime import datetime
+from uuid import uuid4
 
 db = SQLAlchemy()
 
@@ -53,7 +54,7 @@ class Check(db.Model):
     browser_name = db.Column(db.String(length=25), default='firefox')
     version = db.Column(db.String(length=25), default='')
     javascript_enabled = db.Column(db.Boolean, default=True)
-    screenshot = db.Column(db.Text, nullable=True, default=None)
+    filename = db.Column(db.String(50), nullable=True, default=lambda: str(uuid4()) + '.png')
     running = db.Column(db.Boolean, default=False)
     try_count = db.Column(db.Integer, default=0)
     last_run = db.Column(db.DateTime, nullable=True, default=None)
