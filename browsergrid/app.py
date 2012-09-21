@@ -2,7 +2,7 @@
 from __future__ import with_statement
 from .models import db, Job, Check
 from flask import (Flask, request, session, g, redirect, url_for, abort,
-     render_template, flash, Blueprint, current_app)
+     render_template, flash, Blueprint, current_app, send_from_directory)
 from .default_settings import Settings
 from .forms import NewJobForm, create_browser_choices
 from .api import api
@@ -52,13 +52,13 @@ def job_detail(_id):
     job = Job.query.get_or_404(_id)
     return render_template('job_detail.html', job=job)
 
-@bg.route('/screenshot/<int:check_id>')
-def screenshot(check_id):
-    check = Check.query.get_or_404(check_id)
-    blob = ''.join(check.screenshot.split())
-    while len(blob) % 4 != 0:
-        blob += '='
-    return blob.decode('base64'), 200, {'Content-Type': 'image/png'}
+@bg.route('/screenshot/<filename>')
+def screenshot(filename):
+    return send_from_directory(
+        current_app.config['SS_ROOT'],
+        filename,
+    )
+
 app = create_app()
 
 if __name__=="__main__":

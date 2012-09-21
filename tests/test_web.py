@@ -1,5 +1,9 @@
 from .shared import FlaskTestCase
 from browsergrid.models import Job, db
+from shutil import rmtree
+import tempfile
+from uuid import uuid4
+from os import path
 
 class TestNewJob(FlaskTestCase):
 
@@ -48,25 +52,22 @@ class TestFetchScreenshot(FlaskTestCase):
 
     def setUp(self):
         FlaskTestCase.setUp(self) 
-        self.job = Job.new('http://foobar.com')
-        self.check = self.job.add_check(
-            url = 'http://foo.bar.com',
-            browser_name = 'firefox',
-            version = '15',
-            platform = 'any',
-        )
-        self.check.screenshot = 'TEST'.encode('base64')
-        db.session.add(self.check)
-        db.session.commit()
+        self.tempdir = tempfile.mkdtemp()
+        self.app.config['SS_ROOT'] = self.tempdir
+
+    def tearDown(self):
+        FlaskTestCase.tearDown(self) 
+        rmtree(self.tempdir)
     
     def test_screenshot_served_correctly(self):
-        resp = self.client.get('/screenshot/%d' % self.check.id)
+        fname = str(uuid4()) + '.png'
+        with open(path.join(self.tempdir, fname), 'w') as f:
+            f.write('HELLO!')
+        resp = self.client.get('/screenshot/%s' % fname)
         self.assert200(resp)
-        self.assertEqual('TEST', resp.data)
+        self.assertEqual('HELLO!', resp.data)
         self.assertEqual('image/png', resp.headers.get('Content-Type'))
     
-    def test_screenshot_with_bad_padding_served_correctly(self):
-        self.check.screenshot = 'dGVzdA='
-        resp = self.client.get('/screenshot/%d' % self.check.id)
-        self.assert200(resp)
-        self.assertEqual('test', resp.data)
+    def test_screenshot_404s_with_bad_filename(self):
+        resp = self.client.get('/screenshot/fdsfdsafdsfad')
+        self.assert404(resp)
