@@ -9,9 +9,9 @@ from flask import current_app
 
 def create_browser_choices(options):
     choices = []
-    for platform, browsers in options.iteritems():
+    for platform, browsers in sorted(options.iteritems(), reverse=True):
         platform_label = current_app.config['PLATFORM_LABELS'][platform]
-        for browser, versions in browsers.iteritems():
+        for browser, versions in sorted(browsers.iteritems()):
             browser_label = current_app.config['BROWSER_LABELS'][browser]
             if versions:
                 for v in versions:

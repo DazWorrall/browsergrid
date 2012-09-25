@@ -1,5 +1,4 @@
 from os.path import dirname, join, abspath
-from werkzeug.datastructures import OrderedMultiDict
 
 PROJECT_ROOT = abspath(join(dirname(__file__), '..'))
 
@@ -28,7 +27,7 @@ class Settings(object):
         'ipad': 'iPad',
         'android': 'Android',
     }
-    BROWSER_OPTIONS= OrderedMultiDict({
+    BROWSER_OPTIONS = {
         'windows': {
             'internet explorer': range(6, 9),
             'firefox': range(2, 16),
@@ -51,4 +50,4 @@ class Settings(object):
             'firefox': range(2, 16),
             'chrome': [],
         },
-    })
+    }
